@@ -80,15 +80,16 @@ func unescape(s string) (string, error) {
 	var (
 		// Count %, check that they're well-formed.
 		n       int  = 0
+		lenS    int  = len(s)
 		hasPlus bool = false
 	)
-	for i := 0; i < len(s); {
+	for i := 0; i < lenS; {
 		switch s[i] {
 		case '%':
 			n++
-			if i+2 >= len(s) || !ishex(s[i+1]) || !ishex(s[i+2]) {
+			if i+2 >= lenS || !ishex(s[i+1]) || !ishex(s[i+2]) {
 				s = s[i:]
-				if len(s) > 3 {
+				if lenS > 3 {
 					s = s[:3]
 				}
 				return "", EscapeError(s)
@@ -108,8 +109,8 @@ func unescape(s string) (string, error) {
 
 	var t strings.Builder
 	defer t.Reset()
-	t.Grow(len(s) - 2*n)
-	for i := 0; i < len(s); i++ {
+	t.Grow(lenS - 2*n)
+	for i := 0; i < lenS; i++ {
 		switch s[i] {
 		case '%':
 			t.WriteByte(unhex(s[i+1])<<4 | unhex(s[i+2]))
@@ -124,8 +125,8 @@ func unescape(s string) (string, error) {
 }
 
 func escape(s string) string {
-	hexCount := 0
-	for i := 0; i < len(s); i++ {
+	lenS, hexCount := len(s), 0
+	for i := 0; i < lenS; i++ {
 		c := s[i]
 		if shouldEscape(c) {
 			hexCount++
@@ -141,7 +142,7 @@ func escape(s string) string {
 		t   []byte
 	)
 
-	required := len(s) + 2*hexCount
+	required := lenS + 2*hexCount
 	if required <= len(buf) {
 		t = buf[:required]
 	} else {
@@ -149,7 +150,7 @@ func escape(s string) string {
 	}
 
 	j := 0
-	for i := 0; i < len(s); i++ {
+	for i := 0; i < lenS; i++ {
 		switch c := s[i]; {
 		case shouldEscape(c):
 			t[j] = '%'

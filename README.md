@@ -1,6 +1,6 @@
 # RFC3986
 
-<a href="https://rfc-editor.org/rfc/rfc3986.html" target="_blank"><b>RFC 3986</b></a> URI Query Escape/Unescape inspired from "net/url" written in Go
+<a href="https://rfc-editor.org/rfc/rfc3986.html" target="_blank"><b>RFC 3986</b></a> URI Query Escape/Unescape inspired from `"net/url"` written in Go
 
 ## Installation
 
