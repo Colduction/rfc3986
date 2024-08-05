@@ -29,6 +29,7 @@ func BenchmarkQueryEscape(b *testing.B) {
 		})
 	})
 }
+
 func BenchmarkQueryUnescape(b *testing.B) {
 	benchPerCoreConfigs(b, func(b *testing.B) {
 		b.RunParallel(func(b *testing.PB) {

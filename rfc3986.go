@@ -108,7 +108,6 @@ func unescape(s string) (string, error) {
 	}
 
 	var t strings.Builder
-	defer t.Reset()
 	t.Grow(lenS - 2*n)
 	for i := 0; i < lenS; i++ {
 		switch s[i] {
